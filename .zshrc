@@ -51,6 +51,12 @@ alias gc='git commit'
 alias gp='git pull --rebase'
 alias gcam='git commit -am'
 alias gl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+alias ga='git add'
+
+# Laravel aliases.
+alias pa='php artisan'
+alias mc='php artisan make:controller'
+alias mm='php artisan make:model -m'
 
 # Completions.
 autoload -Uz compinit && compinit

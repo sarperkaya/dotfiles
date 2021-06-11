@@ -94,7 +94,7 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write com.apple.screencapture location -string "${HOME}/Desktop"
 
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
-defaults write com.apple.screencapture type -string "png"
+defaults write com.apple.screencapture type -string "jpg"
 
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
@@ -105,8 +105,8 @@ defaults write com.apple.screencapture disable-shadow -bool true
 
 # Set Desktop as the default location for new Finder windows
 # For other paths, use `PfLo` and `file:///full/path/here/`
-defaults write com.apple.finder NewWindowTarget -string "PfDe"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
+# defaults write com.apple.finder NewWindowTarget -string "PfDe"
+# defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
 
 # Show icons for hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
@@ -118,7 +118,7 @@ defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 # defaults write com.apple.finder AppleShowAllFiles -bool true
 
 # Finder: show all filename extensions
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+# defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 # Finder: show status bar
 defaults write com.apple.finder ShowStatusBar -bool true
@@ -139,7 +139,7 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 defaults write NSGlobalDomain com.apple.springing.enabled -bool true
 
 # Remove the spring loading delay for directories
-defaults write NSGlobalDomain com.apple.springing.delay -float 0.1
+defaults write NSGlobalDomain com.apple.springing.delay -float 0.4
 
 # Avoid creating .DS_Store files on network volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
@@ -150,13 +150,13 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
 # Set the size of icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 64" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 64" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 64" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 32" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 32" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 32" ~/Library/Preferences/com.apple.finder.plist
 
 # Use column view in all Finder windows by default
 # Four-letter codes for the other view modes: `icnv`, `Nlsv`, `clmv`, `Flwv`
-defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 # Show the ~/Library folder
 chflags nohidden ~/Library
@@ -167,6 +167,9 @@ chflags nohidden ~/Library
 
 # Set the icon size of Dock items
 defaults write com.apple.dock tilesize -int 30
+
+# Place dock to left
+defaults write com.apple.dock orientation left; killall Dock
 
 # Speed up Mission Control animations
 defaults write com.apple.dock expose-animation-duration -float 0.15
@@ -190,14 +193,14 @@ defaults write com.apple.universalaccess reduceTransparency -bool true
 # 11: Launchpad
 # 12: Notification Center
 # Bottom right screen corner → Mission Control
-defaults write com.apple.dock wvous-br-corner -int 2
-defaults write com.apple.dock wvous-br-modifier -int 0
+# defaults write com.apple.dock wvous-br-corner -int 2
+# defaults write com.apple.dock wvous-br-modifier -int 0
 # Top right screen corner → Put display to sleep
-defaults write com.apple.dock wvous-tr-corner -int 10
-defaults write com.apple.dock wvous-tr-modifier -int 0
+# defaults write com.apple.dock wvous-tr-corner -int 10
+# defaults write com.apple.dock wvous-tr-modifier -int 0
 # Bottom left screen corner → Desktop
-defaults write com.apple.dock wvous-bl-corner -int 4
-defaults write com.apple.dock wvous-bl-modifier -int 0
+# defaults write com.apple.dock wvous-bl-corner -int 4
+# defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
 # Safari & WebKit                                                             #
