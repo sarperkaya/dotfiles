@@ -1,8 +1,28 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 #
 # .zshrc
 #
 # @author Jeff Geerling
 #
+
+setopt prompt_subst
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' actionformats \
+    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+zstyle ':vcs_info:*' formats       \
+    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+
+zstyle ':vcs_info:*' enable git cvs svn
+
+# or use pre_cmd, see man zshcontrib
+vcs_info_wrapper() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+  fi
+}
 
 # Colors.
 unset LSCOLORS
@@ -13,10 +33,17 @@ export CLICOLOR_FORCE=1
 unsetopt nomatch
 
 # Nicer prompt.
-export PS1=$'\n'"%F{green} %*%F %3~ %F{white}"$'\n'"$ "
+export PS1=$'\n'"%F{green}%F{white} %d %F{green}%* $(vcs_info_wrapper) %F{white}"$'\n'"$ "
 
 # Enable plugins.
-plugins=(git brew history kubectl history-substring-search)
+plugins=(
+    git
+    brew
+    history
+    kubectl
+    history-substring-search
+    
+    )
 
 # Custom $PATH with extra locations.
 export PATH=$HOME/Library/Python/3.8/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/go/bin:/usr/local/git/bin:$HOME/.composer/vendor/bin:$PATH
@@ -58,6 +85,8 @@ alias pa='php artisan'
 alias mc='php artisan make:controller'
 alias mm='php artisan make:model -m'
 
+alias pa7='/usr/local/Cellar/php@7.4/7.4.30/bin/php artisan'
+
 # Completions.
 autoload -Uz compinit && compinit
 # Case insensitive.
@@ -88,7 +117,7 @@ export HOMEBREW_AUTO_UPDATE_SECS=604800
 # Super useful Docker container oneshots.
 # Usage: dockrun, or dockrun [centos7|fedora27|debian9|debian8|ubuntu1404|etc.]
 dockrun() {
- docker run -it geerlingguy/docker-"${1:-ubuntu1604}"-ansible /bin/bash
+ docker run -it sarperkaya/docker-"${1:-ubuntu1604}"-ansible /bin/bash
 }
 
 # Enter a running Docker container.
@@ -131,3 +160,19 @@ export COMPOSER_MEMORY_LIMIT=-1
 #}
 #shopt -s extdebug
 #trap prod_command_trap DEBUG
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+fix-style(){
+  ~/.composer/vendor/bin/php-cs-fixer fix $1
+}
+LC_CTYPE=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
